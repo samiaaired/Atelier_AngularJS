@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="monApp">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="JS/angular.min.js" type="text/javascript"></script>
+    </head>
+    <body ng-controller="menuController">
+       
+        <table>
+            <tr ng-repeat=" f in films">
+                <td>
+                    {{ f | uppercase }} 
+                </td>
+            </tr>
+            
+            
+        </table>
+        
+        <br><br><br><br><br>
+        <div>
+            <h1> Nouveau film</h1>
+            <fieldset>
+                <label> Titre </label>
+                <input ng-model="titre"/>
+                <label> Annee </label>
+                <input type="number" ng-model="annee" />
+                
+                <br>
+                <input type="button" value="Ajouter" ng-click="ajouter()"> 
+            </fieldset>
+        </div>
+        
+        {{ titre }} {{ annee}}
+        
+        
+        <div>
+            <h1> Liste des films </h1>
+            
+            Taille page:
+            <select ng-model="taillePage">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+        
+        <table ng-repeat="f in filmListe| limitTo:taillePage" >
+            <tr> 
+            <td>
+                     {{ f.titre }} 
+            </td>
+            
+            
+            
+            <td>
+                     {{ f.annee }} 
+            </td>
+            </tr>
+        </table>
+            
+        </div>
+        
+        <script type="text/javascript">
+            
+            var app = angular.module('monApp', []);
+            app.controller("menuController" , ['$scope', '$http', function ($scope, $http){
+                    
+                    $scope.taillePage=5;
+                    $scope.titre="votre titre";
+                    $scope.annee= 2017 ;
+                    
+                    
+                    
+                   $scope.films = [
+                       
+                       "Dracula",
+                       "Frankstein",
+                       "Dragon Ball"
+                   ];
+                   
+                   $scope.filmListe =[
+                     
+                        {
+                       
+                            titre: 'Draculla',
+                            annee :' 1979',
+                        },
+                        
+                         {
+                       
+                            titre: 'Frankstein',
+                            annee :' 1983',
+                        },
+                        
+                        {
+                       
+                            titre: 'Dragon Ball',
+                            annee :' 2015',
+                        }
+                   ];
+                   
+                   
+                   $scope.ajouter= function(){
+                       var objetFilm={
+                           
+                           titre: $scope.titre ,
+                           annee: $scope.annee ,
+                       };
+                       $scope.filmListe.push(objetFilm);
+                   }                       
+                    
+               } ]);
+                    
+           
+            
+            
+            
+            
+        </script>
+    </body>
+</html>
